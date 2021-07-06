@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       get 'tokens/create'
       resources :users, only: [:show, :create, :update, :destroy]
       resources :tokens, only: [:create]
-      resources :products, only: [:show, :index, :create, :update]
+      resources :products
     end
 
   end
