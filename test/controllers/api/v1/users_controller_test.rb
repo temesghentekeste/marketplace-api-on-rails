@@ -66,8 +66,8 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     end 
 
     test 'destroy user should destroy linked product' do
-      assert_difference('Product.count', -1) do
-        users(:one).destroy
-      end
+        assert_difference('Product.count', -1) do
+          users(:one).destroy
+        end
     end
   end
