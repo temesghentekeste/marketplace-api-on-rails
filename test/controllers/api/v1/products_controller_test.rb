@@ -48,4 +48,27 @@ class Api::V1::ProductsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :forbidden
   end
+
+  test 'should update product' do
+    patch api_v1_product_url(@product),
+          params: { product: { title: @product.title }},
+          headers: { Authorization: JsonWebToken.encode(user_id: @product.user_id)},
+          as: :json
+    assert_response :success
+  end
+
+  test 'should forbid product update' do
+    patch api_v1_product_url(@product),
+          params: { product: {title: @product.title }},
+          as: :json
+    assert_response :forbidden
+  end
+
+  test 'should not update product created by other user' do
+    patch api_v1_product_url(@product),
+          params: { product: { title: @product.title }},
+          headers: { Authorization: JsonWebToken.encode(user_id: users(:two).id)},
+          as: :json
+    assert_response :forbidden
+  end
 end
