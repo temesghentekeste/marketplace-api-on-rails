@@ -17,4 +17,35 @@ class Api::V1::ProductsControllerTest < ActionDispatch::IntegrationTest
     json_response = JSON.parse(self.response.body)
     assert_equal @product.title, json_response['title']
   end 
+
+  test 'should create product' do
+    assert_difference("Product.count") do
+      post api_v1_products_url, 
+          params: { 
+                    product: { 
+                              title: @product.title, 
+                              price: @product.price, 
+                              published: @product.published
+                            }
+                    },
+                    headers: {Authorization: JsonWebToken.encode(user_id: @product.user_id) },
+                      as: :json
+              
+    end
+    assert_response :created
+  end
+
+  test 'should forbid create product' do
+    assert_no_difference("Product.count") do
+      post api_v1_products_url,
+          params: {
+            product: {
+              title: @product.title,
+              price: @product.price,
+              published: @product.published
+            }
+          }, as: :json
+    end
+    assert_response :forbidden
+  end
 end
