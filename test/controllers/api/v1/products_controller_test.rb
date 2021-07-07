@@ -106,8 +106,8 @@ class Api::V1::ProductsControllerTest < ActionDispatch::IntegrationTest
   end 
 
   test 'should filter products by price lower and sort them' do
-    assert_equal [products(:another_tv), products(:two)], 
-                                  Product.lower_or_equal_to_price(500).sort
+    assert_equal [products(:two), products(:another_tv)], 
+                                  Product.below_or_equal_to_price(500).sort
   end 
 
   test 'should sort product by most recent' do
@@ -125,8 +125,7 @@ class Api::V1::ProductsControllerTest < ActionDispatch::IntegrationTest
   test 'search should find cheap TV' do
     search_hash = { keyword: 'tv', min_price: 50, max_price:
     150 }
-    assert_equal [products(:another_tv)], Product.search
-    (search_hash)
+    assert_equal [products(:another_tv)], Product.search(search_hash)
   end
     
   test 'should get all products when no parameters' do
