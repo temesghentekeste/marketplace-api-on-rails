@@ -38,5 +38,6 @@ module MarketPlaceApi
     config.api_only = true
 
     config.eager_load_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join('app/validators')
   end
 end
