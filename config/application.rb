@@ -39,5 +39,11 @@ module MarketPlaceApi
 
     config.eager_load_paths << Rails.root.join('lib')
     config.eager_load_paths << Rails.root.join('app/validators')
+
+    config.after_initialize do
+      Bullet.enable = true
+      Bullet.rails_logger = true
+    end
+    
   end
 end
